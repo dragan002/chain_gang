@@ -48,6 +48,14 @@ $bike_array = $parser->parse();
       <?php } ?>
 
     </table>
+    <?php 
+      $sql = "SELECT * FROM bicycles";
+      $result = $database->query($sql);
+      $row = $result->fetch_assoc();
+      $result->free();
+
+      Echo "Brand: " . $row['brand'];
+    ?>
   </div>
 
 </div>
