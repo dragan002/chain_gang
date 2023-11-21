@@ -3,6 +3,7 @@
 class Bicycle {
 
   static protected $database;
+  static protected $db_columns = ['id', 'brand', 'model', 'year', 'category', 'color', 'gender', 'price', 'weight_kg', 'condition_id', 'description'];
 
   static public function set_database($database) {
     self::$database = $database;
@@ -40,7 +41,6 @@ class Bicycle {
     }
 }
   
-
   static protected function instantiate($record) {
     $object = new self;
 
@@ -53,27 +53,24 @@ class Bicycle {
   }
 
   public function create() {
-    $sql = "INSERT INTO bicycles (";
-    $sql .= "brand, model, year, category, color, description, gender, price, weight_kg, condition_id";
-    $sql .= ") VALUES (";
-    $sql .= "'" . $this->brand . "',";
-    $sql .= "'" . $this->model . "',";
-    $sql .= "'" . $this->year . "',";
-    $sql .= "'" . $this->category . "',";
-    $sql .= "'" . $this->color . "',";
-    $sql .= "'" . $this->description . "',";
-    $sql .= "'" . $this->gender . "',";
-    $sql .= "'" . $this->price . "',";
-    $sql .= "'" . $this->weight_kg . "',";
-    $sql .= "'" . $this->condition_id . "'";
-    $sql .= ")";
-    
+    $attributes = $this->attributes();
+    $sql = "INSERT INTO bicycles (" . join(', ', self::$db_columns) . ") VALUES ('" . join("', '", array_values($attributes)) . "')";
+    echo $sql;
     $result = self::$database->query($sql);
-    
     if ($result) {
         $this->id = self::$database->insert_id;
     }
     return $result;
+}
+
+// Properties which have database columns excluding id
+public function attributes() {
+    $attributes = [];
+    foreach (self::$db_columns as $column) {
+        if ($column == $attributes['id']) { continue; }
+        $attributes[$column] = $this->$column;
+    }
+    return $attributes;
 }
 
 
