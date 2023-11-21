@@ -52,6 +52,31 @@ class Bicycle {
     return $object;
   }
 
+  public function create() {
+    $sql = "INSERT INTO bicycles (";
+    $sql .= "brand, model, year, category, color, description, gender, price, weight_kg, condition_id";
+    $sql .= ") VALUES (";
+    $sql .= "'" . $this->brand . "',";
+    $sql .= "'" . $this->model . "',";
+    $sql .= "'" . $this->year . "',";
+    $sql .= "'" . $this->category . "',";
+    $sql .= "'" . $this->color . "',";
+    $sql .= "'" . $this->description . "',";
+    $sql .= "'" . $this->gender . "',";
+    $sql .= "'" . $this->price . "',";
+    $sql .= "'" . $this->weight_kg . "',";
+    $sql .= "'" . $this->condition_id . "'";
+    $sql .= ")";
+    
+    $result = self::$database->query($sql);
+    
+    if ($result) {
+        $this->id = self::$database->insert_id;
+    }
+    return $result;
+}
+
+
   public $id;
   public $brand;
   public $model;
