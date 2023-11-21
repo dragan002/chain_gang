@@ -35,7 +35,10 @@ if(is_post_request()) {
 } else {
 
   // display the form
-  $bicycle = [];
+  $bicycle = Bicycle::find_by_id($id);
+  if($bicycle == false) {
+    redirect_to(url_for('/staff/bicycles/index.php'));
+  }
 }
 
 ?>
