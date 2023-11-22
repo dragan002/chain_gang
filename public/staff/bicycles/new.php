@@ -31,7 +31,7 @@ if(is_post_request()) {
 
 } else {
   // display the form
-  $bicycle = [];
+  $bicycle = new Bicycle;
 }
 
 ?>

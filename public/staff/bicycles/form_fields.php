@@ -8,12 +8,12 @@ if(!isset($bicycle)) {
 
 <dl>
   <dt>Brand</dt>
-  <dd><input type="text" name="brand" value="" /></dd>
+  <dd><input type="text" name="brand" value="<?php echo h($bicycle->brand ?? ''); ?>" /></dd>
 </dl>
 
 <dl>
   <dt>Model</dt>
-  <dd><input type="text" name="model" value="" /></dd>
+  <dd><input type="text" name="model" value="<?php echo h($bicycle->model ?? ''); ?>" /></dd>
 </dl>
 
 <dl>
@@ -23,7 +23,7 @@ if(!isset($bicycle)) {
       <option value=""></option>
     <?php $this_year = idate('Y') ?>
     <?php for($year=$this_year-20; $year <= $this_year; $year++) { ?>
-      <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+      <option value="<?php echo $year; ?>"<?php if($bicycle->year == $year) { echo 'selected'; }?>><?php echo $year; ?></option>
     <?php } ?>
     </select>
   </dd>
@@ -35,7 +35,7 @@ if(!isset($bicycle)) {
     <select name="category">
       <option value=""></option>
     <?php foreach(Bicycle::CATEGORIES as $category) { ?>
-      <option value="<?php echo $category; ?>"><?php echo $category; ?></option>
+      <option value="<?php echo $category; ?>"<?php if($bicycle->category == $category) { echo 'selected'; }?>><?php echo $category; ?></option>
     <?php } ?>
     </select>
   </dd>
@@ -47,7 +47,7 @@ if(!isset($bicycle)) {
     <select name="gender">
       <option value=""></option>
     <?php foreach(Bicycle::GENDERS as $gender) { ?>
-      <option value="<?php echo $gender; ?>"><?php echo $gender; ?></option>
+      <option value="<?php echo $gender; ?>"<?php if($bicycle->gender == $gender) { echo 'selected'; }?>><?php echo $gender; ?></option>
     <?php } ?>
     </select>
   </dd>
@@ -55,7 +55,8 @@ if(!isset($bicycle)) {
 
 <dl>
   <dt>Color</dt>
-  <dd><input type="text" name="color" value="" /></dd>
+  <dd><input type="text" name="color" value="<?php echo h($bicycle->color); ?>" /></dd>
+  
 </dl>
 
 <dl>
@@ -64,7 +65,7 @@ if(!isset($bicycle)) {
     <select name="condition_id">
       <option value=""></option>
     <?php foreach(Bicycle::CONDITION_OPTIONS as $cond_id => $cond_name) { ?>
-      <option value="<?php echo $cond_id; ?>"><?php echo $cond_name; ?></option>
+      <option value="<?php echo $cond_id; ?>"<?php if($bicycle->condition_id == $cond_id) { echo 'selected'; }?>><?php echo $cond_name; ?></option>
     <?php } ?>
     </select>
   </dd>
@@ -72,15 +73,15 @@ if(!isset($bicycle)) {
 
 <dl>
   <dt>Weight (kg)</dt>
-  <dd><input type="text" name="weight_kg" value="" /></dd>
+  <dd><input type="number" name="weight_kg" value="<?php echo h($bicycle->weight_kg); ?>" /></dd>
 </dl>
 
 <dl>
   <dt>Price</dt>
-  <dd>$ <input type="text" name="price" size="18" value="" /></dd>
+  <dd>$ <input type="number" name="price" size="18" value="<?php echo h($bicycle->price); ?>" /></dd>
 </dl>
 
 <dl>
   <dt>Description</dt>
-  <dd><textarea name="description" rows="5" cols="50"></textarea></dd>
+  <dd><textarea name="description" rows="5" cols="50"><?php echo h($bicycle->description); ?></textarea></dd>
 </dl>
