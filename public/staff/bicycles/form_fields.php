@@ -8,18 +8,18 @@ if(!isset($bicycle)) {
 
 <dl>
   <dt>Brand</dt>
-  <dd><input type="text" name="brand" value="<?php echo h($bicycle->brand ?? ''); ?>" /></dd>
+  <dd><input type="text" name="bicycle[brand]" value="<?php echo h($bicycle->brand ?? ''); ?>" /></dd>
 </dl>
 
 <dl>
   <dt>Model</dt>
-  <dd><input type="text" name="model" value="<?php echo h($bicycle->model ?? ''); ?>" /></dd>
+  <dd><input type="text" name="bicycle[model]" value="<?php echo h($bicycle->model ?? ''); ?>" /></dd>
 </dl>
 
 <dl>
   <dt>Year</dt>
   <dd>
-    <select name="year">
+    <select name="bicycle[year]">
       <option value=""></option>
     <?php $this_year = idate('Y') ?>
     <?php for($year=$this_year-20; $year <= $this_year; $year++) { ?>
@@ -32,7 +32,7 @@ if(!isset($bicycle)) {
 <dl>
   <dt>Category</dt>
   <dd>
-    <select name="category">
+    <select name="bicycle[category]">
       <option value=""></option>
     <?php foreach(Bicycle::CATEGORIES as $category) { ?>
       <option value="<?php echo $category; ?>"<?php if($bicycle->category == $category) { echo 'selected'; }?>><?php echo $category; ?></option>
@@ -44,7 +44,7 @@ if(!isset($bicycle)) {
 <dl>
   <dt>Gender</dt>
   <dd>
-    <select name="gender">
+    <select name="bicycle[gender]">
       <option value=""></option>
     <?php foreach(Bicycle::GENDERS as $gender) { ?>
       <option value="<?php echo $gender; ?>"<?php if($bicycle->gender == $gender) { echo 'selected'; }?>><?php echo $gender; ?></option>
@@ -55,14 +55,14 @@ if(!isset($bicycle)) {
 
 <dl>
   <dt>Color</dt>
-  <dd><input type="text" name="color" value="<?php echo h($bicycle->color); ?>" /></dd>
+  <dd><input type="text" name="bicycle[color]" value="<?php echo h($bicycle->color); ?>" /></dd>
   
 </dl>
 
 <dl>
   <dt>Condition</dt>
   <dd>
-    <select name="condition_id">
+    <select name="bicycle[condition_id]">
       <option value=""></option>
     <?php foreach(Bicycle::CONDITION_OPTIONS as $cond_id => $cond_name) { ?>
       <option value="<?php echo $cond_id; ?>"<?php if($bicycle->condition_id == $cond_id) { echo 'selected'; }?>><?php echo $cond_name; ?></option>
@@ -73,15 +73,15 @@ if(!isset($bicycle)) {
 
 <dl>
   <dt>Weight (kg)</dt>
-  <dd><input type="number" name="weight_kg" value="<?php echo h($bicycle->weight_kg); ?>" /></dd>
+  <dd><input type="number" name="bicycle[weight_kg]" value="<?php echo h($bicycle->weight_kg); ?>" /></dd>
 </dl>
 
 <dl>
   <dt>Price</dt>
-  <dd>$ <input type="number" name="price" size="18" value="<?php echo h($bicycle->price); ?>" /></dd>
+  <dd>$ <input type="number" name="bicycle[price]" size="18" value="<?php echo h($bicycle->price); ?>" /></dd>
 </dl>
 
 <dl>
   <dt>Description</dt>
-  <dd><textarea name="description" rows="5" cols="50"><?php echo h($bicycle->description); ?></textarea></dd>
+  <dd><textarea name="bicycle[description]" rows="5" cols="50"><?php echo h($bicycle->description); ?></textarea></dd>
 </dl>

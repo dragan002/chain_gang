@@ -10,19 +10,9 @@ $id = $_GET['id'];
 if(is_post_request()) {
 
   // Save record using post parameters
-  $args = [];
-  $args['brand'] = $_POST['brand'] ?? NULL;
-  $args['model'] = $_POST['model'] ?? NULL;
-  $args['year'] = $_POST['year'] ?? NULL;
-  $args['category'] = $_POST['category'] ?? NULL;
-  $args['color'] = $_POST['color'] ?? NULL;
-  $args['gender'] = $_POST['gender'] ?? NULL;
-  $args['price'] = $_POST['price'] ?? NULL;
-  $args['weight_kg'] = $_POST['weight_kg'] ?? NULL;
-  $args['condition_id'] = $_POST['condition_id'] ?? NULL;
-  $args['description'] = $_POST['description'] ?? NULL;
-
-  $bicycle = [];
+  $args = $_POST['bicycle'];
+  $bicycle->merge_attributes($args);
+  $result = $bicycle->save();
 
   $result = false;
   if($result === true) {
