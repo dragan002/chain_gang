@@ -44,7 +44,6 @@ $bikes = Bicycle::find_all();
       <?php } ?>
 
     </table>
-
   </div>
 
 </div>

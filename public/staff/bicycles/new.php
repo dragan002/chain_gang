@@ -18,7 +18,7 @@ if(is_post_request()) {
   $args['description'] = $_POST['description'] ?? NULL;
 
   $bicycle = new Bicycle($args);
-  $result = $bicycle->create();
+  $result = $bicycle->  create();
 
   
   if($result === true) {

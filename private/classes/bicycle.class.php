@@ -10,17 +10,17 @@ class Bicycle {
   }
 
   static public function find_by_sql($sql) {
-    $result =  self::$database->query($sql);
-    if(! $result ) {
+    $result = self::$database->query($sql);
+    if(!$result) {
       exit("Database query failed");
     } 
-
+    //result in object
     $object_array = [];
 
     while($record = $result->fetch_assoc()) {
       $object_array[] = self::instantiate($record);
     }
-     $result->free();
+    $result->free();
 
     return $object_array;
   }
@@ -52,7 +52,7 @@ class Bicycle {
     return $object;
   }
 
-  protected function create() {
+  public function create() {
     $attributes = $this->sanitized_attributes();
     $sql = "INSERT INTO bicycles (" . join(', ', self::$db_columns) . ") VALUES ('" . join("', '", array_values($attributes)) . "')";
     echo $sql;
