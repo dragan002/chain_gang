@@ -2,7 +2,7 @@
 
 <?php
 
-$id = $_GET['id'] ?? '1'; // PHP > 7.0
+$id = $_GET['id'] ?? '1'; 
 
 $bicycle = Bicycle::find_by_id($id);
 

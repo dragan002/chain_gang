@@ -109,6 +109,14 @@ public function save() {
   }
 }
 
+public function delete() {
+  $sql = "DELETE FROM bicycles ";
+  $sql .= "WHERE id = '". self::$database->escape_string( $this->id) ."'";
+  $sql .= " LIMIT 1";
+  $result = self::$database->query($sql);
+  return $result;
+}
+
 public function merge_attributes($args = []) {
   foreach($args as $key => $value) {
     if(property_exists($this, $key) && !is_null($value)) {

@@ -7,9 +7,16 @@ if(!isset($_GET['id'])) {
 }
 $id = $_GET['id'];
 
+$bicycle = Bicycle::find_By_Id($id);
+
+if($bicycle == false) {
+  redirect_to(url_for('/staff/bicycles/id'));
+}
+
 if(is_post_request()) {
 
   // Delete bicycle
+  $result = $bicycle->delete();
 
   $_SESSION['message'] = 'The bicycle was deleted successfully.';
   redirect_to(url_for('/staff/bicycles/index.php'));
@@ -30,7 +37,7 @@ if(is_post_request()) {
   <div class="bicycle delete">
     <h1>Delete Bicycle</h1>
     <p>Are you sure you want to delete this bicycle?</p>
-    <p class="item"><?php echo h('Bike name'); ?></p>
+    <p class="item"><?php echo h($bicycle->name()); ?></p>
 
     <form action="<?php echo url_for('/staff/bicycles/delete.php?id=' . h(u($id))); ?>" method="post">
       <div id="operations">
