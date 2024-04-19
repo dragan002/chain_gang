@@ -9,7 +9,6 @@ if(is_post_request()) {
   $bicycle = new Bicycle($args);
   $result = $bicycle->create();
 
-  
   if($result === true) {
     $new_id = $bicycle->id;
     $_SESSION['message'] = 'The bicycle was created successfully.';
@@ -35,7 +34,7 @@ if(is_post_request()) {
   <div class="bicycle new">
     <h1>Create Bicycle</h1>
 
-    <?php // echo display_errors($errors); ?>
+    <?php echo display_errors($bicycle->errors); ?>
 
     <form action="<?php echo url_for('/staff/bicycles/new.php'); ?>" method="post">
 

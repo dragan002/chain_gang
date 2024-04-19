@@ -1,6 +1,6 @@
 <?php
 
-function display_errors($errors=array()) {
+function display_errors($errors = []) {
   $output = '';
   if(!empty($errors)) {
     $output .= "<div class=\"errors\">";
