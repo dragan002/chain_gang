@@ -19,7 +19,7 @@ class DatabaseObject {
         $object_array = [];
     
         while($record = $result->fetch_assoc()) {
-          $object_array[] = self::instantiate($record);
+          $object_array[] = static::instantiate($record);
         }
         $result->free();
     
@@ -27,13 +27,13 @@ class DatabaseObject {
       }
     
       static public function find_all() {
-        $sql = "SELECT * FROM bicycles";
-        return self::find_by_sql($sql);
+        $sql = "SELECT * FROM " . static::$table_name;
+        return static::find_by_sql($sql);
       }
     
       static public function find_by_id($id) {
-        $sql = "SELECT * FROM bicycles WHERE id = " . self::$database->escape_string($id);
-        $obj_array = self::find_by_sql($sql);
+        $sql = "SELECT * FROM " . static::$table_name . " WHERE id = " . self::$database->escape_string($id);
+        $obj_array = static::find_by_sql($sql);
         
         if (!empty($obj_array)) {
             return array_shift($obj_array);
@@ -43,7 +43,7 @@ class DatabaseObject {
     }
       
       static protected function instantiate($record) {
-        $object = new self;
+        $object = new static;
     
         foreach($record as $property => $value) {
           if(property_exists($object, $property)) {
@@ -57,14 +57,8 @@ class DatabaseObject {
     
         $this->errors = [];
     
-        if(is_blank($this->brand)) {
-          $this->errors[] = "Brand cannot be blank";
-        }
-    
-        if(is_blank($this->model)) {
-          $this->errors[] = "Model cannot be blank";
-        }
-    
+        //Add custom Validation
+            
         return $this->errors;
       }
     
@@ -74,7 +68,7 @@ class DatabaseObject {
         $this->validate();
         if(!empty($this->errors)) { return false; }
         $attributes = $this->sanitized_attributes();
-        $sql = "INSERT INTO bicycles (" . join(', ', self::$db_columns) . ") VALUES ('" . join("', '", array_values($attributes)) . "')";
+        $sql = "INSERT INTO " . static::$table_name . " (" . join(', ', array_keys($attributes)) . ") VALUES ('" . join("', '", array_values($attributes)) . "')";
         echo $sql;
         $result = self::$database->query($sql);
         if ($result) {
@@ -92,7 +86,7 @@ class DatabaseObject {
       foreach($attributes as $key => $value) {
         $attribute_pairs[] = "{$key} = '{$value}'";
       }
-      $sql = "UPDATE bicycles SET ";
+      $sql = "UPDATE " . static::$table_name . " SET ";
       $sql .= join(", ", $attribute_pairs);
       $sql .= " WHERE id = " . self::$database->escape_string($this->id);
       $sql .= " LIMIT 1";
@@ -109,7 +103,7 @@ class DatabaseObject {
     }
     
     public function delete() {
-      $sql = "DELETE FROM bicycles ";
+      $sql = "DELETE FROM " . static::$table_name . " ";
       $sql .= "WHERE id = '". self::$database->escape_string( $this->id) ."'";
       $sql .= " LIMIT 1";
       $result = self::$database->query($sql);
@@ -127,7 +121,7 @@ class DatabaseObject {
     // Properties which have database columns excluding id
     public function attributes() {
         $attributes = [];
-        foreach (self::$db_columns as $column) {
+        foreach (static::$db_columns as $column) {
             if ($column == $attributes['id']) { continue; }
             $attributes[$column] = $this->$column;
         }
