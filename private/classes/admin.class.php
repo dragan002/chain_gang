@@ -27,18 +27,18 @@ class Admin extends DatabaseObject {
         return $this->first_name . ' ' . $this->last_name;
     }
 
-    public function set_hashed_password() {
+    protected function set_hashed_password() {
         $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
     }
 
-    public function create() {
+    protected function create() {
         $this->set_hashed_password();
-        parent::create();
+        return parent::create();
     }
     
-    public function update() {
+    protected function update() {
         $this->set_hashed_password();
-        parent::update();
+        return parent::update();
     }
 
     protected function validate() {
