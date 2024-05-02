@@ -99,7 +99,13 @@
   // * For existing records, provide current ID as second argument
   //   has_unique_username('johnqpublic', 4)
   function has_unique_username($username, $current_id="0") {
-    // Need to re-write for OOP
+    $admin = Admin::find_by_username($username);
+    if($admin === false || $admin->id == $current_id) {
+      return true;
+    } else {
+      return false;
+    }
+    
   }
 
 ?>
