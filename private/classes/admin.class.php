@@ -14,6 +14,8 @@ class Admin extends DatabaseObject {
     public $password;
     public $confirm_password;
 
+    protected $passoword_required = true;
+
     public function __construct($args = []) {
         $this->first_name = $args['first_name'] ?? '';
         $this->last_name = $args['last_name'] ?? '';
@@ -37,7 +39,11 @@ class Admin extends DatabaseObject {
     }
     
     protected function update() {
-        $this->set_hashed_password();
+        if($this->password != '') {
+            $this->set_hashed_password();
+        } else {
+            $this->passoword_required = false;
+        }
         return parent::update();
     }
 
@@ -72,12 +78,20 @@ class Admin extends DatabaseObject {
             $this->errors[] = 'Username must be between 8 and 255 characters';
         }
 
-        if (empty($password)) {
-            $this->errors[] = "Password cannot be blank";
-        } elseif (strlen($password) < 8) {
-            $this->errors[] = "Password must be at least 8 characters long";
-        } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $this->password)) {
-            $this->errors[] = "Password must contain at least one lowercase letter, one uppercase letter, and one digit";
+        if($this->passoword_required) {
+            if (empty($this->password)) {
+                $this->errors[] = "Password cannot be blank";
+            } elseif (strlen($this->password) < 8) {
+                $this->errors[] = "Password must be at least 8 characters long";
+            } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $this->password)) {
+                $this->errors[] = "Password must contain at least one lowercase letter, one uppercase letter, and one digit";
+            }
+    
+            if(is_blank($this->confirm_password)) {
+                $this->errors[] = "Confirm password cannot be blank";
+             } elseif ($this->password != $this->confirm_password) {
+                 $this->errors[] = "Password and confirmation do not match";
+            }
         }
     
         return $this->errors;
