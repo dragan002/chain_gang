@@ -47,22 +47,37 @@ class Admin extends DatabaseObject {
     
         if(is_blank($this->first_name)) {
           $this->errors[] = "First name cannot be blank";
+        } elseif (!has_length($this->first_name, array('min' => 2, 'max' => 255))) {
+            $this->errors[] = "First name must be between 2 and 255 characters.";
         }
     
         if(is_blank($this->last_name)) {
           $this->errors[] = "Last name cannot be blank";
+        } elseif (!has_length($this->first_name, array('min' => 2, 'max' => 255))) {
+            $this->errors[] = "First name must be between 2 and 255 characters.";
         }
 
         if(is_blank($this->email)) {
             $this->errors[] = "Email cannot be blank";
+        } elseif (!has_length($this->email, array("max" => 255))) {
+            $this->errors[] = "Email must be no more than 255 characters";
+           // Check that the email is well-formed.
+        } elseif(!has_valid_email_format($this->email)) {
+            $this->errors[] = "That does not appear to be a valid email address.";
         }
 
         if(is_blank($this->username)) {
             $this->errors[] = "Username cannot be blank";
+        } else if(!has_length($this->username, array('min' => 8, 'max' => 255))) {
+            $this->errors[] = 'Username must be between 8 and 255 characters';
         }
 
-        if(is_blank($this->password)) {
+        if (empty($password)) {
             $this->errors[] = "Password cannot be blank";
+        } elseif (strlen($password) < 8) {
+            $this->errors[] = "Password must be at least 8 characters long";
+        } elseif (!preg_match('/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/', $this->password)) {
+            $this->errors[] = "Password must contain at least one lowercase letter, one uppercase letter, and one digit";
         }
     
         return $this->errors;
