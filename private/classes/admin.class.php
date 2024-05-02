@@ -33,6 +33,10 @@ class Admin extends DatabaseObject {
         $this->hashed_password = password_hash($this->password, PASSWORD_BCRYPT);
     }
 
+    public function verify_password($password) {
+       return password_verify($password, $this->hashed_password);
+    }
+
     protected function create() {
         $this->set_hashed_password();
         return parent::create();
