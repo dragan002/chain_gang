@@ -60,6 +60,20 @@ $bicycles = Bicycle::find_by_sql($sql);
       <?php } ?>
   	</table>
 
+    <?php
+if ($pagination->total_pages() > 1) {
+    // Replace 'pagination-class' with the correct class name for the <div> element
+    echo "<div class=\"pagination-class\">";
+    $url = url_for('/staff/bicycles/index.php');
+
+    echo $pagination->previuous_link($url);
+    echo $pagination->next_link($url);
+
+    echo "</div>";
+}
+?>
+
+
   </div>
 
 </div>
