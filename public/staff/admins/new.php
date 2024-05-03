@@ -11,7 +11,7 @@ if(is_post_request()) {
 
   if($result === true) {
     $new_id = $admin->id;
-    $_SESSION['message'] = 'The admin was created successfully.';
+    $session->message('The admin was created successfully.');
     redirect_to(url_for('/staff/admins/show.php?id=' . $new_id));
   } else {
     // show errors
