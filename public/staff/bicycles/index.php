@@ -1,7 +1,7 @@
 <?php require_once('../../../private/initialize.php'); ?>
 
 <?php
-  
+  require_login();
 // Find all bicycles;
 $bicycles = Bicycle::find_all();
   
