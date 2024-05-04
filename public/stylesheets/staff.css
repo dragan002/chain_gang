@@ -139,3 +139,20 @@ dd {
   margin: 1em 30px;
   width: 890px;
 }
+
+
+/* Pagination */
+
+.pagination {
+  margin: 1em 0;
+}
+
+.pagination a, .pagination span {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.pagination span.selected {
+  font-weight: bold;
+  color: #000;
+}

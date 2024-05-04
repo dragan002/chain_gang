@@ -43,12 +43,37 @@ class Pagination {
 
     public function next_link($url = '') {
         $link = '';
-        
+
           if ($this->next_page() !== false) {
               // Replace '{}' with the actual page number retrieved from $pagination->next_page()
               $link =  "<a href=\"{$url}?page={$this->next_page()}\">";
               $link .= "Next &raquo;</a>";
           }
           return $link;
+    }
+
+    public function number_links($url="") {
+        $output = '';
+        for($i = 1; $i <= $this->total_pages(); $i++) {
+            if($i == $this->current_page) {
+              $output = "<span class=\"selected\">{$i}</span>";
+            } else {
+              $output .= "<a href = \"{$url}?page={$i}\">{$i}</a>";
+            }
+        }
+        return $output;
+    }
+
+    public function page_links($url="") {
+        $output = '';
+        if ($this->total_pages() > 1) {
+            // Replace 'pagination-class' with the correct class name for the <div> element
+            $output = "<div class=\"pagination\">";
+            $output .= $this->previuous_link($url);
+            $output .= $this->number_links($url);
+            $output .= $this->next_link($url);
+            $output .= "</this>";
+        }
+        return $output;
     }
 }

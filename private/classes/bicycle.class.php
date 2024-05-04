@@ -42,12 +42,6 @@ class Bicycle extends DatabaseObject {
     $this->weight_kg = $args['weight_kg'] ?? 0.0;
     $this->condition_id = $args['condition_id'] ?? 3;
 
-    // Caution: allows private/protected properties to be set
-    // foreach($args as $k => $v) {
-    //   if(property_exists($this, $k)) {
-    //     $this->$k = $v;
-    //   }
-    // }
   }
 
   public function name() {
